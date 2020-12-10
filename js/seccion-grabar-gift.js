@@ -293,3 +293,4 @@ document.getElementById("repetir-captura").addEventListener("click",function () 
         div_contenedor.classList.remove("ocultar");
         
     }
+    tengo que hacer el fetch y despues hacer el btn de descarga
