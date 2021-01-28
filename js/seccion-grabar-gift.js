@@ -1,6 +1,7 @@
+let form = new FormData();
 
-
-var app_key = "PoR3CQt5ZlA0CoMpJi1MK9iCYQG6fgkT";
+const url = 'https://upload.giphy.com/v1/gifs';
+const api_key = '2QRBa2w3k34LbUKfXGoNpuL3Mj6sHAEQ';
 
 
 
@@ -27,19 +28,20 @@ document.getElementById("btn-finalizar").addEventListener("click",function(ev) {
     document.getElementById("cronometro").classList.add("ocultar");
     document.getElementById("btn-finalizar").classList.add("ocultar");
     document.getElementById("repetir-captura").classList.remove("ocultar");
-    darle_stop_a_grabar();
+    darle_stop_a_grabar_subir();
     mostrar_btn_subir_gifo();
 
     
 })
 document.getElementById("btn-subir-gifo").addEventListener("click",function(ev) {
+    
     pintar_btn_3();
     despintar_btn_2();
     video_poner_stop_filtro();
     estamos_subiendo_tu_gifo();
-    setTimeout(() => {
+   /*  setTimeout(() => {
         gifo_subido_con_exito();
-    }, 3000);
+    }, 10000); */
 })
 document.getElementById("repetir-captura").addEventListener("click",function () {
     repetir_captura();
@@ -222,13 +224,20 @@ document.getElementById("repetir-captura").addEventListener("click",function () 
     async function cuando_toca_btn_grabar() {
                  
         recorder.startRecording();
-     
+       /*  const sleep = m => new Promise(r => setTimeout(r, m));
+        await sleep(3000); */
             
         }
-    async function darle_stop_a_grabar() {
-        recorder.stopRecording(function() {
-                let blob = recorder.getBlob();
-                invokeSaveAsDialog(blob);
+    async function darle_stop_a_grabar_subir() {
+
+        recorder.stopRecording( async function() {
+                let blob = await recorder.getBlob();
+                form.append('file', blob, 'myGif.gif');
+
+                //esta linea es para descargar el gif
+                //invokeSaveAsDialog(blob);
+                upload();
+
             });
             
         }
@@ -299,4 +308,27 @@ document.getElementById("repetir-captura").addEventListener("click",function () 
         div_contenedor.classList.remove("ocultar");
         
     }
-   
+   //fetch para subir
+
+    async function upload() {
+        let url_key = url + '?api_key=' + api_key;
+    
+        fetch(url_key, {
+            method: 'POST',
+            //        mode: 'cors',
+            body: form
+        })
+            .then(response => response.json())
+            .then(result => {
+                // console.log(`Resultado:${result}`);
+                res = result;
+                console.log(res);
+                console.log(res['data']['id']);
+               if(res == result){
+                gifo_subido_con_exito();
+               }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
