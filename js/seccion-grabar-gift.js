@@ -1,4 +1,11 @@
 
+
+var app_key = "PoR3CQt5ZlA0CoMpJi1MK9iCYQG6fgkT";
+
+
+
+
+
 document.getElementById("btn-comenzar").addEventListener("click",function(){
 btn_comenzar();
 pintar_btn_1();
@@ -215,8 +222,7 @@ document.getElementById("repetir-captura").addEventListener("click",function () 
     async function cuando_toca_btn_grabar() {
                  
         recorder.startRecording();
-       /*  const sleep = m => new Promise(r => setTimeout(r, m));
-        await sleep(3000); */
+     
             
         }
     async function darle_stop_a_grabar() {
@@ -293,4 +299,4 @@ document.getElementById("repetir-captura").addEventListener("click",function () 
         div_contenedor.classList.remove("ocultar");
         
     }
-    tengo que hacer el fetch y despues hacer el btn de descarga
+   
