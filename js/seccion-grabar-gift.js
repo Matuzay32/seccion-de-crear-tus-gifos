@@ -1,4 +1,4 @@
-let form = new FormData();
+let form_data = new FormData();
 
 const url = 'https://upload.giphy.com/v1/gifs';
 const api_key = '2QRBa2w3k34LbUKfXGoNpuL3Mj6sHAEQ';
@@ -232,11 +232,11 @@ document.getElementById("repetir-captura").addEventListener("click",function () 
 
         recorder.stopRecording( async function() {
                 let blob = await recorder.getBlob();
-                form.append('file', blob, 'myGif.gif');
+                form_data.append('file', blob, 'myGif.gif');
 
                 //esta linea es para descargar el gif
                 //invokeSaveAsDialog(blob);
-                upload();
+                fetch_subir()
 
             });
             
@@ -310,13 +310,13 @@ document.getElementById("repetir-captura").addEventListener("click",function () 
     }
    //fetch para subir
 
-    async function upload() {
-        let url_key = url + '?api_key=' + api_key;
+    async function fetch_subir() {
+        let url_key = `${url}?api_key=${api_key}`;
     
         fetch(url_key, {
             method: 'POST',
             //        mode: 'cors',
-            body: form
+            body: form_data
         })
             .then(response => response.json())
             .then(result => {
@@ -327,6 +327,7 @@ document.getElementById("repetir-captura").addEventListener("click",function () 
                if(res == result){
                 gifo_subido_con_exito();
                }
+
             })
             .catch(err => {
                 console.log(err);
